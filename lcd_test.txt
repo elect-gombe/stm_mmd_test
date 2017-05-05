@@ -1,0 +1,58 @@
+Configuration	lcd_test
+STM32CubeMX 	4.20.1
+Date	05/05/2017
+MCU	STM32F446RETx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+SPI2	Full-Duplex Master	SPI2_MISO	PC2
+SPI2	Full-Duplex Master	SPI2_MOSI	PC1
+SPI2	Full-Duplex Master	SPI2_SCK	PB10
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+2	PC13	GPIO_EXTI13	B1 [Blue PushButton]
+3	PC14-OSC32_IN*	RCC_OSC32_IN	
+4	PC15-OSC32_OUT*	RCC_OSC32_OUT	
+5	PH0-OSC_IN*	RCC_OSC_IN	
+6	PH1-OSC_OUT*	RCC_OSC_OUT	
+9	PC1	SPI2_MOSI	
+10	PC2	SPI2_MISO	
+16	PA2*	USART2_TX	USART_TX
+17	PA3*	USART2_RX	USART_RX
+21	PA5	GPIO_Output	LD2 [Green Led]
+29	PB10	SPI2_SCK	
+46	PA13*	SYS_JTMS-SWDIO	TMS
+49	PA14*	SYS_JTCK-SWCLK	TCK
+55	PB3*	SYS_JTDO-SWO	SWO
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : lcd_test
+Project Folder : /home/gombe/workspace/program/arm-gcc/graphic_tftlcd/lcd_test
+Toolchain / IDE : EWARM
+Firmware Package Name and Version : STM32Cube FW_F4 V1.16.0
+
+
+Code Generation Settings : 
+STM32Cube Firmware Library Package : Copy all used libraries into the project folder
+Generate peripheral initialization as a pair of '.c/.h' files per peripheral : No
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : No
+
+
+Toolchains Settings : 
+Compiler Optimizations : Balanced Size/Speed
+
+
+
+
+
+

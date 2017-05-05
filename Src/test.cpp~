@@ -1,0 +1,8 @@
+class hoge{
+private:
+  int i;
+public:
+  int hello();
+  int hogeworld();
+
+};
