@@ -36,7 +36,7 @@
 #include "stm32f4xx_it.h"
 
 /* USER CODE BEGIN 0 */
-/* extern volatile int trans_flag; */
+extern volatile int trans_flag;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -78,7 +78,9 @@ void DMA1_Stream4_IRQHandler(void)
   /* USER CODE END DMA1_Stream4_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_spi2_tx);
   /* USER CODE BEGIN DMA1_Stream4_IRQn 1 */
-  /* trans_flag = 0; */
+  if(hdma_spi2_tx.State!=HAL_DMA_STATE_BUSY)
+    trans_flag = 0;
+
   /* USER CODE END DMA1_Stream4_IRQn 1 */
 }
 
@@ -86,3 +88,15 @@ void DMA1_Stream4_IRQHandler(void)
 
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+
+
+
+
+
+
+
+
+
+
+

@@ -237,6 +237,9 @@ int texturetriangle::triangle_set(fvector4 px[3],const float col,const texture_t
   float zdelta_top_mid,wdelta_top_mid;
   float zdelta_top_btm,wdelta_top_btm;
   float zdelta_mid_btm,wdelta_mid_btm;
+  fvector2 uvdelta_top_mid;
+  fvector2 uvdelta_top_btm;
+  fvector2 uvdelta_mid_btm;
 
 
   if(p[2].y!=p[1].y){
@@ -245,6 +248,7 @@ int texturetriangle::triangle_set(fvector4 px[3],const float col,const texture_t
     delta_top_mid = (p[1].x-p[2].x)*iy;
     zdelta_top_mid = (p[1].z-p[2].z)*iy;
     wdelta_top_mid = (p[1].w-p[2].w)*iy;
+    uvdelta_top_mid = (uv[1]-uv[2])*(1.f/(p[1].y-p[2].y));
   }else{
     delta_top_mid = 0;
     zdelta_top_mid = 0;
@@ -257,6 +261,7 @@ int texturetriangle::triangle_set(fvector4 px[3],const float col,const texture_t
     delta_mid_btm = (p[1].x-p[0].x)*iy;
     zdelta_mid_btm = (p[1].z-p[0].z)*iy;
     wdelta_mid_btm = (p[1].w-p[0].w)*iy;
+    uvdelta_mid_btm = (uv[1]-uv[0])*(1.f/(p[1].y-p[0].y));
   }else{
     delta_mid_btm = 0;
     zdelta_mid_btm = 0;
@@ -269,30 +274,12 @@ int texturetriangle::triangle_set(fvector4 px[3],const float col,const texture_t
     delta_top_btm = (p[2].x-p[0].x)*iy;
     zdelta_top_btm = (p[2].z-p[0].z)*iy;
     wdelta_top_btm = (p[2].w-p[0].w)*iy;
+    uvdelta_top_btm = (uv[2]-uv[0])*(1.f/(p[2].y-p[0].y));
   }else{
     delta_top_btm = 0;
     zdelta_top_btm = 0;
     wdelta_top_btm = 0;
   }
-
-  fvector2 uvdelta_top_mid;
-  fvector2 uvdelta_top_btm;
-  fvector2 uvdelta_mid_btm;
-  if(p[2].y!=p[1].y){
-    uvdelta_top_mid = (uv[1]-uv[2])*(1.f/(p[1].y-p[2].y));
-  }else{
-  }
-
-  if(p[1].y!=p[0].y){
-    uvdelta_mid_btm = (uv[1]-uv[0])*(1.f/(p[1].y-p[0].y));
-  }else{
-  }
-
-  if(p[2].y!=p[0].y){
-    uvdelta_top_btm = (uv[2]-uv[0])*(1.f/(p[2].y-p[0].y));
-  }else{
-  }
-  // printf("zdelta %f %f %f\n",zdelta_top_btm/65536.,zdelta_top_mid/65536.,zdelta_mid_btm/65536.);
     
   float split_x;
   if(p[0].y != p[2].y){

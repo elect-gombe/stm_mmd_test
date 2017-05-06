@@ -180,13 +180,12 @@ void LCD_SetCursor(unsigned short x, unsigned short y,unsigned short x1, unsigne
 }
 
 void LCD_out(int x,int y,uint16_t *b,int n){
-  /* while(trans_flag); */
-  /* trans_flag = 1; */
+  while(trans_flag)    toggleLED();
+  trans_flag = 1;
   LCD_SetCursor(x,y,160-1,128-1);
   CS_LOW();
   RS_HIGH();//LCD_RS_HI;
-  HAL_SPI_Transmit(&hspi2, (void*)b, n*2,50);
-  CS_HIGH();
+  HAL_SPI_Transmit_DMA(&hspi2, (void*)b, n*2);
 }
 
 void LCD_continuous_output(unsigned short x,unsigned short y,unsigned short color,int n)

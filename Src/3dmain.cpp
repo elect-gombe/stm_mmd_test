@@ -9,6 +9,9 @@
 #include "texturepoly.hpp"
 #include "lcd.h"
 
+extern "C"{
+void toggleLED(void);
+}
 
 #include "poly.h"
 // const fvector2_t point_uv[]={
@@ -328,6 +331,8 @@ float loadPower(const fvector3 &light_pos,const fvector3 &light_n,const fvector4
 
 const int SIZE_TEX = 256;
 
+uint16_t drawbuff[2][window_width];
+
 int main3d(void){
   Matrix4 m;
   Matrix4 projection;
@@ -353,7 +358,7 @@ int main3d(void){
 
   fvector3 viewdir;
   fvector3 veye;
-  float dist = 3;
+  float dist = 2;
   vector2 mouse;
   vector2 pmouse;
   vector2 np;
@@ -396,7 +401,6 @@ int main3d(void){
     fvector4 poly_transed[POINTNUM];
   
     float zlinebuf[window_width];
-    uint16_t drawbuff[2][window_width];
     texturetriangle t[POLYNUM];
 
     for(int j=0;j<POINTNUM;j++){
@@ -404,6 +408,7 @@ int main3d(void){
       poly_transed[j] = m.applyit_v4(fvector3(pointvec[j]));
       //std::cout<<"poly"<<poly_transed[j].x<<","<<poly_transed[j].y<<","<<poly_transed[j].z<<std::endl;
     }
+
     for(int i=0;i<POLYNUM;i++){
       for(int j=0;j<3;j++){
 	v[j] = poly_transed[polyvec[i][j]];
@@ -436,6 +441,7 @@ int main3d(void){
 	if(t[tnum++].triangle_set(v,light,&tex,puv)==-1)tnum--;
       }
       //int loadPower(const vector3 &light_pos,const vector3 &light_n,const vector3 obj[3]){
+
     }
 
     int draworder[POLYNUM];
@@ -467,14 +473,14 @@ int main3d(void){
     for(int y=0;y<window_height;y++){
       for(int i=0;i<window_width;i++){
 	zlinebuf[i]=1.f;
-	drawbuff[0][i]=0x1000;
+	drawbuff[y&1][i]=0x1000;
       }
       for(int i=0;i<tnum;i++){
 	if(t[draworder[i]].ymin < y&&t[draworder[i]].ymax >= y){
-	  t[draworder[i]].draw(zlinebuf,drawbuff[0]);
+	  t[draworder[i]].draw(zlinebuf,drawbuff[y&1]);
 	}
       }
-      LCD_out(0,y,drawbuff[0],160);
+      LCD_out(0,y,drawbuff[y&1],160);
     }
 
     fvector3 vp;
